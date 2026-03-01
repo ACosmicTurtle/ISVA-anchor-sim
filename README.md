@@ -1,6 +1,7 @@
 # ISVA-anchor-sim
 
 ISVA Anchor Simulation (v0.1)
+
 This repository contains an early prototype of anchoring logic for ISVA (Instrument-Synthesiser Video Automation)
 
 The objective is to detect the first approximate pitch match between a MIDI sequence’s initial note and segments of an audio track. Once detected, a deterministic temporal offset can be computed to synchronise the MIDI and audio timelines.
