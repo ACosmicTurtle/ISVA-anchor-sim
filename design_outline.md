@@ -1,0 +1,11 @@
+# ISVA Anchor Simulation (v0.1) - Design Description
+
+Part of ISVA (Instrumental-Synthesiser Video Automation) contains anchoring logic which is intended to find the first instance in a video's audio track that has an approximately matching pitch to a complementary MIDI's first pitch - note or chord. This would allow for rigid and deterministic temporal-alignment to synchronise both the MIDI sequence and video.
+
+This is a first attempt at simulating this anchoring logic using short slices and hardcoded values to check for any closely matching pitches using the properties of an abstracted MIDI sequence and an audio track within acceptable tolerances, shifting those slices along a hypothetical audio track when that tolerance is not met. This has been implemented intentionally without the use of an external DSP library so as to research and evaluate this prototype-logic model first.
+
+It's limitations are seen in that only one singular pitch is evaluated in each slice and no further validation as well, a fixed time window measured by the duration of how long the MIDI's initial pitch lasts for. 
+
+This will be improved upon in a v0.2 simulation by having each audio slice contain an array of pitches, a positive/negative delta-neighbourhood to allow extra tolerance and slightly more leniency in the duration of each general audio slice so as to not have it be completely fixed allowing for multiple slices to be evaluated concurrently. A sanity check will also be added for the condition the approximate pitches are found whereby for either side of the delta a certain proportion of the array of pitches need to be contained in the Epsilon tolerance relative to its distance from the MIDI's pitch. The reason behind this is to try and circumvent false positives as much as possible.
+
+By determining the first point of intersection, this enables us to find the times as to where both audio and MIDI tracks would be in temporal alignment. This is confirmed by creating an offset such that you take the difference of the audio's start time of the validated anchor slice to the MIDI's time of initial pitch detection. This is done because the MIDI's time won't always start at 0 seconds therefore the MIDI's time to "start" on the audio's timeline can be synchronised predictably.
